@@ -1,0 +1,77 @@
+/* 
+Remove duplicates from un unsorted linked list
+Approach 1 : Naive approach of iterating and remove all further duplicates of current node.
+ 							Space complexity O(1) & time complexity O(n^2)
+Approach 2: Use a hash table, space complexity O(n), time complexity O(n)             
+*/
+ 
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+
+struct Node
+{
+    int data = 0;
+    Node *next = nullptr;
+};
+
+void insert(Node*& head, int data)
+{
+	 Node* newNode = new Node;
+   newNode->data = data;
+   newNode->next = head;
+   head = newNode;
+}
+
+void printlist(Node* head)
+{
+  while(head)
+  {
+    cout<<head->data<<"-->";
+    head = head->next;
+  }
+  cout<<endl;
+}
+
+//Methode 1
+void removeDuplicate(Node* head)
+{
+  if(head==nullptr ||(head&&head->next == nullptr)
+          return;
+   Node* cur = head;
+   while(curr)
+   {
+      Node* runner = cur;
+      while(runner->next != nullptr)
+      {
+          if(runner->next->data == cur->data)
+              runner->next = runner->next->next;
+          else
+            runner = runner->next;
+      }
+      cur =cur->next;
+   }
+}
+
+//methode 2 using hashmap
+void removeDuplicates1( Node * head ) 
+{
+    if(head==nullptr ||(head&&head->next == nullptr)
+          return;
+    unordered_map<int, int> node_map;
+    Node* prev = head;
+    Node* cur = head->next;
+    node_map[head->data] = 1;
+    while(cur!=nullptr)
+    {
+        while(cur&&node_map.find(cur->data)!=node_map.end()) 
+          cur = cur->next;
+        prev->next = cur;
+        prev=cur;
+        if(cur)
+        {
+           node_map[cur->data] = 1;
+           cur = cur->next;
+        }
+    }
+}
