@@ -1,28 +1,22 @@
-#include<iostream>
 #include<string>
-#include<algorithm>
+#include<iostream>
 #include<vector>
-#include<unordered_map>
-
 using namespace std;
 
-void findPermutations(string cur, unordered_map <char, int>& map, vector<string>& res, int len)
+void findPermutations(string cur, string s, vector<string>& res)
 {
-    int cur_len = curr.size();
-    if(cur_len==len)
+    int len = s.size();
+    if(!len)
     {
       res.push_back(cur); return;
     }
   
-   for (unordered_map<char,int>::iterator i = map.begin(); i!=map.end(); i++)
+   for (int i = 0; i<len; i++)
    {
-     if(i->second!=0)
-     {
-        string tmp = cur + i->first;
-        i->second--;
-        findPermutations(tmp,map,res,len);
-        i->second++;
-     }
+        string first = cur + s.substr(i,1);
+        string rem = s.substr(0,i) + s.substr(i+1,len-i-1);
+        findPermutations(first,rem,res);
+    
    }
 }
 
@@ -30,17 +24,8 @@ int main()
 {
 	string s = "abbc";
 	string cur ="";
-	unordered_map <char, int> map;
-	int len = s.length();
-	for (int i = 0; i < len; i++)
-	{
-		if (map.find(s[i])!=map.end())
-			map.find(s[i])->second++;
-		else
-			map[s[i]]++;
-	}
 	vector<string> res;
-	findPermutations(cur,map,res,len);
+	findPermutations(cur,s,res);
 	for (int i = 0; i < res.size(); i++)
 	{
 		cout<<res[i]<<endl;
